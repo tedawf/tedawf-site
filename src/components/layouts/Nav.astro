@@ -1,5 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
+import Link from "../ui/Link.astro";
+import Button from "../ui/Button.astro";
 
 const navData = [
   {
@@ -18,15 +20,21 @@ const navData = [
 ];
 ---
 
-<nav>
+<nav class="flex justify-between p-6 items-center">
   <ul class="flex items-center justify-start gap-8">
     {
       navData.map((i) => (
         <li>
-          <a href={i.href} aria-label={i.icon && i.title}>
-            {i.icon && <Icon name={i.icon} size={40} aria-hidden="true" />}
-            {!i.icon && i.title}
-          </a>
+          {i.icon && (
+            <Button>
+              <Icon name={i.icon} size={40} aria-hidden="true" />
+            </Button>
+          )}
+          {!i.icon && (
+            <Link href={i.href} aria-label={i.icon && i.title}>
+              {i.title}
+            </Link>
+          )}
         </li>
       ))
     }

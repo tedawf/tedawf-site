@@ -1,0 +1,7 @@
+---
+const { ...rest } = Astro.props;
+---
+
+<a {...rest} class="hover:shadow-inset items-center justify-center rounded-lg p-2">
+  <slot />
+</a>
