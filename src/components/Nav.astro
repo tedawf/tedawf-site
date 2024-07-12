@@ -1,7 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
-import Link from "../ui/Link.astro";
-import Button from "../ui/Button.astro";
+import Link from "./ui/Link.astro";
+import Button from "./ui/Button.astro";
 
 const navData = [
   {
@@ -20,7 +20,7 @@ const navData = [
 ];
 ---
 
-<nav class="flex justify-between p-6 items-center">
+<nav class="flex justify-between p-4 items-center">
   <ul class="flex items-center justify-start gap-8">
     {
       navData.map((i) => (

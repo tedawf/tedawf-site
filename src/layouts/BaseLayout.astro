@@ -1,6 +1,7 @@
 ---
-import BaseHead from "@/components/layouts/BaseHead.astro";
-import Nav from "@/components/layouts/Nav.astro";
+import BaseHead from "@/layouts/BaseHead.astro";
+import Footer from "@/components/Footer.astro";
+import Nav from "@/components/Nav.astro";
 
 import "@/styles/global.css";
 ---
@@ -10,5 +11,6 @@ import "@/styles/global.css";
   <body class="bg-[#e6e7ee]">
     <Nav />
     <slot />
+    <Footer />
   </body>
 </html>

@@ -1,0 +1,34 @@
+---
+import { socialData } from "@/data/siteData";
+import { Icon } from "astro-icon/components";
+import Link from "./ui/Link.astro";
+---
+
+<footer>
+  <div class="flex flex-wrap justify-between p-4">
+    <p>
+      &copy;
+      <span id="copyright">{new Date().getFullYear()}</span>
+      Ang Wei Feng (Ted). Built with
+      <Link href="https://astro.build">Astro</Link>
+      🚀
+    </p>
+    <ul class="flex flex-wrap items-center justify-center gap-2">
+      {
+        socialData.map(({ title, href, icon }) => (
+          <li>
+            <Link href={href} aria-label={title} title={title}>
+              <Icon name={icon} size={24} />
+            </Link>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</footer>
+
+<!-- the above is on build, this is on website load -->
+<script>
+  const copyrightSpan = document.querySelector("#copyright") as HTMLSpanElement;
+  copyrightSpan.textContent = new Date().getFullYear().toString();
+</script>
