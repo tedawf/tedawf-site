@@ -1,4 +1,5 @@
 ---
+import { cn } from "@/lib/utils";
 import type { HTMLAttributes } from "astro/types";
 
 interface Props extends HTMLAttributes<"a"> {
@@ -19,13 +20,13 @@ const {
 
 <a
   href={href}
-  class:list={[
+  class:list={cn(
     "rounded-lg p-2",
-    variant == "up" && "shadow-soft",
-    variant == "down" && "shadow-inset",
+    { "shadow-soft": variant === "up", "shadow-inset": variant === "down" },
     isCircle && "rounded-full",
     showHover && "hover:shadow-inset",
-  ]}
+    Astro.props.class
+  )}
   {...rest}>
   <slot />
 </a>
