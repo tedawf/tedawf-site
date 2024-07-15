@@ -17,7 +17,7 @@ import Link from "./ui/Link.astro";
       {
         socialData.map(({ title, href, icon }) => (
           <li>
-            <Link href={href} aria-label={title} title={title}>
+            <Link href={href} aria-label={title} title={title} class="flex">
               <Icon name={icon} size={24} />
             </Link>
           </li>
