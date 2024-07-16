@@ -16,9 +16,9 @@ const iconData = await getEntries(icons);
 ---
 
 <article aria-label={title}>
-  <Link href={url} variant="up" class="flex max-w-sm flex-col">
+  <Link href={url} variant="up" class="flex max-w-fit flex-col">
     <Image src={thumbnail} alt={title} width={400} format="avif" />
-    <div class="px-4">
+    <div class="px-4 py-2">
       <div class="flex items-center">
         <Heading tagName="h3" size="h4">{title}</Heading>
         <Icon name="icon--external-link" size={25} />

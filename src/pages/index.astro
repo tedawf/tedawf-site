@@ -1,16 +1,13 @@
 ---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
 import AboutMe from "@/components/home/AboutMe.astro";
 import Hero from "@/components/home/Hero.astro";
-import ProjectCard from "@/components/ui/ProjectCard.astro";
-import BaseLayout from "@/layouts/BaseLayout.astro";
-import { getEntry } from "astro:content";
-
-// temp
-const project1 = await getEntry("projects", "personal-portfolio");
+import RecentProjects from "@/components/home/RecentProjects.astro";
 ---
 
 <BaseLayout>
   <Hero />
   <AboutMe />
-  <ProjectCard data={project1.data} />
+  <RecentProjects />
 </BaseLayout>
