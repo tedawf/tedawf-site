@@ -10,7 +10,7 @@ const { ...rest } = Astro.props;
 
 <button
   class:list={cn(
-    "items-center justify-center rounded-lg p-2 shadow-light hover:shadow-inset",
+    "shadow-light aria-pressed:shadow-inset",
     Astro.props.class
   )}
   {...rest}>

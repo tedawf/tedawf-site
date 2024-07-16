@@ -1,11 +1,22 @@
 ---
+export const prerender = false;
+
 import Button from "@/components/ui/Button.astro";
 import ProjectCard from "@/components/ui/ProjectCard.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import getSearchParamAsArray from "@/lib/getSearchParamAsArray";
 import { getCollection } from "astro:content";
 
-const projects = await getCollection("projects");
+let projects = await getCollection("projects");
 const tools = await getCollection("tools");
+
+const filterItems = getSearchParamAsArray(Astro.url, "tools");
+if (filterItems.length > 0) {
+  projects = projects.filter((p) => {
+    const projectTools = p.data.icons.map((t) => t.id);
+    return filterItems.some((i) => projectTools.includes(i));
+  });
+}
 ---
 
 <BaseLayout
@@ -14,13 +25,16 @@ const tools = await getCollection("tools");
   <div>
     <div class="flex">
       <p>Filter by tools</p>
-      <Button>Clear all</Button>
+      {filterItems.length > 0 && <Button id="clear-all">Clear all</Button>}
     </div>
-    <ul>
+    <ul class="flex gap-2">
       {
         tools.map((t) => (
           <li>
-            <Button data-tool={t.id} aria-pressed="true">
+            <Button
+              class="rounded-full px-2 py-1"
+              data-tool={t.id}
+              aria-pressed={filterItems.includes(t.id)}>
               <span>{t.data.title}</span>
             </Button>
           </li>
@@ -35,3 +49,46 @@ const tools = await getCollection("tools");
     </ul>
   </div>
 </BaseLayout>
+
+<script>
+  import getSearchParamsAsArray from "@/lib/getSearchParamAsArray";
+import setNewUrlParams from "@/lib/setNewUrlParams";
+
+  const filters = document.querySelectorAll(
+    "[data-tool]"
+  ) as NodeListOf<HTMLButtonElement>;
+  const clearAllBtn = document.querySelector("#clear-all");
+
+  // clear all
+  clearAllBtn?.addEventListener("click", () => {
+    window.location.href = "projects";
+  });
+
+  // filter
+  filters.forEach((filter) => {
+    filter.addEventListener("click", () => {
+      const isPressed = filter.getAttribute("aria-pressed") === "true";
+
+      filter.setAttribute("aria-pressed", isPressed ? "false" : "true");
+
+      // get all existing params
+      const existingParams = getSearchParamsAsArray(
+        new URL(window.location.href),
+        "tools"
+      );
+
+      const newParams = isPressed
+        ? existingParams.filter((p) => p !== filter?.dataset?.tool)
+        : [...existingParams, filter?.dataset?.tool];
+
+      // set new url
+      const newUrl = setNewUrlParams({
+        key: "tools",
+        url: new URL(window.location.href),
+        valueArray: newParams as string[],
+      });
+
+      window.location.assign(newUrl);
+    });
+  });
+</script>
