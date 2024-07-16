@@ -1,0 +1,105 @@
+---
+import Image from "astro/components/Image.astro";
+import Button from "../ui/Button.astro";
+import Heading from "../ui/Heading.astro";
+
+import luffy from "@/assets/luffy.png";
+---
+
+<section aria-label="Contact Form" class="relative flex justify-center">
+  <div data-pattern></div>
+  <div
+    class="relative mx-auto grid max-w-screen-xl place-items-center items-start justify-center p-4">
+    <Image
+      src={luffy}
+      alt="cat"
+      width="700"
+      format="avif"
+      class="aspect-video h-full w-full rounded-sm object-cover"
+    />
+    <form id="contact-form" class="grid gap-1 text-balance rounded-sm p-2">
+      <Heading tagName="h2" size="h2">Let's connect!</Heading>
+      <p>My sec-cat-tary, Luffy, will be taking your contact details.</p>
+      <div class="grid gap-2">
+        <label for="name">First Name</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          required
+          placeholder="e.g., Luffy D. Cat"
+        />
+      </div>
+      <div class="grid gap-2">
+        <label for="email">Email Address</label>
+        <input
+          type="text"
+          id="email"
+          name="email"
+          required
+          placeholder="e.g., meow@tedawf.com"
+        />
+      </div>
+      <Button type="submit" class="btn primary">Contact Me</Button>
+      <p id="form-message" class="message"></p>
+    </form>
+  </div>
+</section>
+
+<script>
+  const contactForm = document.querySelector(
+    "#contact-form"
+  ) as HTMLFormElement;
+  const formMessage = document.querySelector(
+    "#form-message"
+  ) as HTMLParagraphElement;
+
+  const updateMessage = (message: string, type: "error" | "success") => {
+    formMessage.classList.add(type);
+    formMessage.textContent = message;
+    setTimeout(() => {
+      formMessage.textContent = "";
+      formMessage.classList.remove(type);
+    }, 3000);
+  };
+
+  contactForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const formData = new FormData(contactForm);
+    const { name, email } = Object.fromEntries(formData);
+
+    // Validation
+    if (!name || typeof name !== "string" || name.length < 2) {
+      return updateMessage("Please enter a valid name", "error");
+    }
+    if (!email || typeof email !== "string" || !email.includes("@")) {
+      return updateMessage("Please enter a valid email", "error");
+    }
+
+    try {
+      const res = await fetch("http://localhost:3000/contacts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Response was not OK");
+      }
+      contactForm.reset();
+      return updateMessage(
+        "Thanks for reaching out and I will reply as soon as possible.",
+        "success"
+      );
+    } catch (e) {
+      if (e instanceof Error) {
+        console.error(e.message);
+        return updateMessage(e.message, "error");
+      }
+      return updateMessage(
+        "Something went wrong. Please try again later.",
+        "error"
+      );
+    }
+  });
+</script>
