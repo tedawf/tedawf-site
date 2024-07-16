@@ -1,0 +1,37 @@
+---
+import Button from "@/components/ui/Button.astro";
+import ProjectCard from "@/components/ui/ProjectCard.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const projects = await getCollection("projects");
+const tools = await getCollection("tools");
+---
+
+<BaseLayout
+  title="Ted Projects"
+  description="Here are some projects I have done in the past.">
+  <div>
+    <div class="flex">
+      <p>Filter by tools</p>
+      <Button>Clear all</Button>
+    </div>
+    <ul>
+      {
+        tools.map((t) => (
+          <li>
+            <Button data-tool={t.id} aria-pressed="true">
+              <span>{t.data.title}</span>
+            </Button>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <div>
+    <ul class="grid gap-8 md:grid-cols-3 2xl:grid-cols-4">
+      {projects.map(({ data }) => <ProjectCard data={data} />)}
+    </ul>
+  </div>
+</BaseLayout>
