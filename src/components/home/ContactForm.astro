@@ -6,7 +6,10 @@ import Heading from "../ui/Heading.astro";
 import luffy from "@/assets/luffy.png";
 ---
 
-<section aria-label="Contact Form" class="relative flex justify-center">
+<section
+  aria-label="Contact Form"
+  class="relative flex justify-center"
+  id="contact">
   <div data-pattern></div>
   <div
     class="relative mx-auto grid max-w-screen-xl place-items-center items-start justify-center p-4">
@@ -27,7 +30,7 @@ import luffy from "@/assets/luffy.png";
           id="name"
           name="name"
           required
-          placeholder="e.g., Luffy D. Cat"
+          placeholder="e.g. Luffy D. Cat"
         />
       </div>
       <div class="grid gap-2">
@@ -37,7 +40,7 @@ import luffy from "@/assets/luffy.png";
           id="email"
           name="email"
           required
-          placeholder="e.g., meow@tedawf.com"
+          placeholder="e.g. meow@tedawf.com"
         />
       </div>
       <Button type="submit" class="btn primary">Contact Me</Button>

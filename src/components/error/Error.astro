@@ -1,0 +1,18 @@
+---
+import { Image } from "astro:assets";
+import Heading from "../ui/Heading.astro";
+import Link from "../ui/Link.astro";
+
+import luffy from "@/assets/luffy.png";
+---
+
+<header aria-label="">
+  <Image src={luffy} alt="cat" width={200} format="avif" class="rounded-lg" />
+  <Heading tagName="h1" size="h2">Page Not Found</Heading>
+  <p>
+    Sorry, my sec-cat-tary, Luffy, couldn't find the page you are looking for.
+  </p>
+  <div>
+    <Link href="/" variant="up">Go home</Link>
+  </div>
+</header>
