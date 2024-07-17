@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
+import ProjectCard from "../project/ProjectCard.astro";
 import Heading from "../ui/Heading.astro";
-import ProjectCard from "../ui/ProjectCard.astro";
 import Link from "../ui/Link.astro";
 
 const projects = await getCollection("projects");

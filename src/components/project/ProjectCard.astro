@@ -1,0 +1,28 @@
+---
+import { Icon } from "astro-icon/components";
+import type { CollectionEntry } from "astro:content";
+import { getEntries } from "astro:content";
+import ImageCard from "../ui/ImageCard.astro";
+
+type Props = {
+  data: CollectionEntry<"projects">["data"];
+};
+
+const { data } = Astro.props;
+const { title, url, icons, thumbnail } = data;
+const iconData = await getEntries(icons);
+---
+
+<ImageCard title={title} description={url} imgSrc={thumbnail} imgAlt={title}>
+  <div>
+    <ul>
+      {
+        iconData.map(({ data }) => (
+          <li>
+            <Icon name={data.icon} title={data.icon} aria-label={data.icon} />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</ImageCard>

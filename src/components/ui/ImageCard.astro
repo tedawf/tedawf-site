@@ -1,0 +1,33 @@
+---
+import { Image } from "astro:assets";
+import Heading from "./Heading.astro";
+
+type Props = {
+  title: string;
+  description: string;
+  imgSrc: ImageMetadata;
+  imgAlt: string;
+};
+
+const { title, description, imgSrc, imgAlt } = Astro.props;
+---
+
+<article
+  aria-label={title}
+  class="flex flex-col rounded-lg border border-[#d1d9e6] p-4 shadow-soft">
+  <div class="rounded-lg">
+    <Image
+      src={imgSrc}
+      alt={imgAlt}
+      width={800}
+      height={400}
+      format="avif"
+      class="h-full w-full object-cover"
+    />
+  </div>
+  <div class="px-2">
+    <Heading tagName="h3" size="h3">{title}</Heading>
+    <p>{description}</p>
+    <slot />
+  </div>
+</article>
