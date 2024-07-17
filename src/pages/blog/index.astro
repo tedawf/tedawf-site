@@ -1,0 +1,11 @@
+---
+import BlogCard from "@/components/blog/BlogCard.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getEntry } from "astro:content";
+
+const postEntry = await getEntry("posts", "bring-out-your-inner-artist");
+---
+
+<BaseLayout title="Blog">
+  <BlogCard post={postEntry} />
+</BaseLayout>
